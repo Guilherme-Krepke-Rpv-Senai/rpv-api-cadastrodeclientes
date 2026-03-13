@@ -1,22 +1,35 @@
 import fs from 'fs';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
 // Caminho absoluto para o arquivo de dados
 const filePath = path.join(process.cwd(), 'src', 'pages', 'api', 'bd.json');
 
 export default function handler(req, res) {
     const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const { usuarios } = JSON.parse(jsonData);
+    const parsed = JSON.parse(jsonData);
+    const usuarios = parsed.usuarios || [];
 
     const { nome, email, telefone } = req.body
 
-    // verificar se o nome existe no array prévio
-    if (usuarios.some((user) => user.nome === nome)) {
-        return res.status(400).json({ mensagem: 'Usuário já cadastrado !' });
+    if (!nome || !email || !telefone) {
+        return res.status(400).json({ mensagem: 'Nome, email e telefone são obrigatórios.' });
     }
 
-    usuarios.push({ nome, email, telefone });
-    fs.writeFileSync(filePath, JSON.stringify({ usuarios }));
+    // verificar se o email já existe
+    if (usuarios.some((user) => user.email === email)) {
+        return res.status(400).json({ mensagem: 'Usuário já cadastrado com este e-mail!' });
+    }
 
-    res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso !' });
+    const novoUsuario = {
+        id: uuidv4(),
+        nome,
+        email,
+        telefone
+    };
+
+    usuarios.push(novoUsuario);
+    fs.writeFileSync(filePath, JSON.stringify({ ...parsed, usuarios }, null, 2));
+
+    res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso!', usuario: novoUsuario });
 }
