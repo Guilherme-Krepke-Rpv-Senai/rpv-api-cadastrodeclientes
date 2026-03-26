@@ -15,13 +15,14 @@ const geistMono = Geist_Mono({
 export default function Home() {
 
   useEffect(() => {
-    async function buscaLivro() {
-      const response = await fetch('http://localhost:3000/api/list/usuarios');
-      const result = await response.json();
-      console.log(result);
+    async function buscaClientes(){
+      const response = await fetch('http://localhost:3000/api/list/cliente')
+        const data = await response.json()
+        console.log('data', data)
     }
-    buscaLivro();
+    buscaClientes();
   }, [])
+
   return (
     <>
       <h1>Teste</h1>
