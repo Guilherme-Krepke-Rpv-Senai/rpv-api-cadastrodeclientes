@@ -17,12 +17,12 @@ export default function Home() {
   useEffect(() => {
     async function buscaClientes(){
       const response = await fetch('http://localhost:3000/api/list/cliente')
-        const data = await response.json()
-        console.log('data', data)
-    }
-    buscaClientes();
-  }, [])
+      const data = await response.json()
 
+      console.log('data', data)
+    }
+    buscaClientes()
+  }, [])
   return (
     <>
       <h1>Teste</h1>

@@ -1,8 +1,8 @@
-export default function ListarCliente() {
+export default function ListarClientes() {
 
-    return (
+    return(
         <>
-            <h1>exemplo cadastrar</h1>
+            <h1>Esta página ficará responsável por listar clientes !</h1>
         </>
     )
 }
