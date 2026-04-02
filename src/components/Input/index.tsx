@@ -23,24 +23,20 @@ type TInput<T extends FieldValues> = {
     register: UseFormRegister<T>
     errors: FieldErrors<T>
     size: keyof typeof sizeClassMap
-    funcaoParaSerMostrada: () => void
 }
 
-export function InputCallback({
+export function Input({
     errors,
     label,
     name,
     register,
     required,
-    size,
-    funcaoParaSerMostrada
+    size
 }: TInput<FormType>) {
-    console.log('eerors component', name)
-
     return(
         <div className={`col-span-12 sm:col-span-6 ${sizeClassMap[size]} relative flex flex-col`}>
             <label>{label}{required && (<span className='text-red-500'>*</span>)}: </label>
-            <input {...register(name)} onBlur={funcaoParaSerMostrada} className='border rounded-md px-2 py-1 text-zinc-100'/>
+            <input {...register(name)} className='border rounded-md px-2 py-1 text-zinc-100'/>
             <span className='absolute top-16 text-xs text-red-500'>{errors[name]?.message}</span>
         </div>
     )
