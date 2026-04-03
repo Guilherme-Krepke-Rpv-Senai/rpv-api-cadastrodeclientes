@@ -14,61 +14,66 @@ interface IDadosClientes {
     numero: string,
     complemento: string,
 }
-
 interface IClientes {
-    id: number,
-    dados: IDadosClientes
+    data: IDadosClientes[] | []
 }
+
 export const getServerSideProps = (async () => {
-    const response = await fetch('http://localhost:3000/api/list/cliente')
-    const data: IClientes = await response.json()
-    return { props: { data } }
+  const response = await fetch('http://localhost:3000/api/list/cliente')
+  const data:IClientes = await response.json()
+  return { props: { data } }
 }) satisfies GetServerSideProps<{ data: IClientes }>
+
 export default function ListarClientes({
     data
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    console.log('Usuario recuperado no SSR ', data)
-    return (
+    return(
         <>
-            <h1 className="text-4xl text-center">Nossos Clientes!</h1>
-
-            <div className="mx-auto max-w-4xl border border-zinc-300 rounded-xl p-4 mt-8">
-                <table className="table-auto gap-8">
+            <h1 className="text-4xl text-center">Nossos clientes !</h1>
+            <div className="mx-auto mt-8 max-w-4xl rounded-xl border boder-zinc-300 p-4">
+                <div className="overflow-x-auto">
+                    <table className="table-auto min-w-3xl w-full">
                     <thead>
-                        <tr className="border border-zinc-400 grid grid-cols-12">
-                            <th className="cols-span-2 text-start text-sm ">Nome</th>
-                            <th className="cols-span-4 text-start text-sm ">Email</th>
-                            <th className="cols-span-1 text-center text-sm pr-4 ">Sexo</th>
-                            <th className="cols-span-5 text-start text-sm ">Endereço</th>
+                        <tr className="border-b border-zinc-400 grid grid-cols-12">
+                            <th className="col-span-2 text-start text-xl">Documento</th>
+                            <th className="col-span-3 text-start text-xl">Nome</th>
+                            <th className="col-span-1 text-center text-xl pr-4">Sexo</th>
+                            <th className="col-span-6 text-start text-xl">Endereço</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.data?.length > 0 ? (
+                        { data?.data?.length > 0 ? (
                             <>
                                 {data.data.map((cliente) => (
-                                    <tr className="grid grid-cols-12">
-                                        <td className="cols-span-2 text-start text-sm ">{cliente.cpfcnpj}</td>
-                                        <td className="cols-span-4 text-start text-sm ">{cliente.email}</td>
-                                        <td className="cols-span-1 text-center text-sm pr-4">{cliente.sexo}</td>
-                                        <td className="cols-span-5 text-start text-sm ">{formataEndereco({
+                                    <tr className="grid grid-cols-12 even:bg-zinc-600/30" key={cliente.cpfcnpj}>
+                                        <td className="col-span-2 text-start text-sm">{cliente.cpfcnpj}</td>
+                                        <td className="col-span-3 text-start text-sm">{cliente.nome}</td>
+                                        <td className="col-span-1 text-center text-sm pr-4">{cliente.sexo}</td>
+                                        <td className="col-span-6 text-start text-sm">{formataEndereco({
                                             bairro: cliente.bairro,
                                             cidade: cliente.cidade,
-                                            complemento: cliente.complemento,
-                                            estado: cliente.estado,
+                                            rua: cliente.rua,
                                             numero: cliente.numero,
-                                            rua: cliente.rua
+                                            complemento: cliente.complemento,
+                                            estado: cliente.estado
                                         })}</td>
                                     </tr>
                                 ))}
                             </>
-                        ):(
-                            <></>
-                        )}
-
+                        ) : (
+                            <tr className="grid grid-cols-12">
+                                <td className="col-span-12 text-center text-base p-4">Não há clientes cadastrados.</td>
+                            </tr>
+                        ) }
                     </tbody>
-                </table>
+                    <tfoot>
+                        <tr className="border-t border-zinc-300">
+                            <td className="col-span-12 text-end py-2 font-bold pr-10">Usuários cadastrados: {data.data.length}</td>
+                        </tr>
+                    </tfoot>
+                    </table>
+                </div>
             </div>
-
         </>
     )
 }
