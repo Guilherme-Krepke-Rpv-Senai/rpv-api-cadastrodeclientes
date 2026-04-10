@@ -1,4 +1,5 @@
 import { FormType } from "@/pages/clientes/criar"
+import { masksDefault, TMasksDefault } from "@/utils"
 import { ChangeEvent } from "react"
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
 
@@ -24,8 +25,12 @@ type TInputMask<T extends FieldValues> = {
     register: UseFormRegister<T>
     errors: FieldErrors<T>
     size: keyof typeof sizeClassMap
-    masks: string | string[]
+    masks: string | string[] | TMasksDefault
     placeholder?: string
+}
+
+function isDefaultMaskKey(mask: string): mask is TMasksDefault {
+    return mask in masksDefault
 }
 
 function getDigitsLimit(mask: string) {
@@ -68,7 +73,13 @@ export function InputMask({
     placeholder = 'Digite'
 }: TInputMask<FormType>) {
     const registration = register(name)
-    const availableMasks = Array.isArray(masks) ? masks : [masks]
+    const availableMasks = Array.isArray(masks)
+        ? masks
+        : isDefaultMaskKey(masks)
+            ? Array.isArray(masksDefault[masks])
+                ? masksDefault[masks]
+                : [masksDefault[masks]]
+            : [masks]
     const maxLength = Math.max(...availableMasks.map((mask) => mask.length))
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {

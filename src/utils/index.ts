@@ -40,3 +40,12 @@ export function formataEndereco({
 }: IEndereco): string{
     return `${rua}, ${numero} - ${complemento}, ${bairro} - ${cidade}/${estado}`
 }
+
+export const masksDefault = {
+    cpfcnpj: ["###.###.###-##", "##.###.###/####-##"],
+    telefone: "(##) ####-####",
+    celular: "(##) #####-####",
+    cep: "#####-###"
+}
+
+export type TMasksDefault = keyof typeof masksDefault

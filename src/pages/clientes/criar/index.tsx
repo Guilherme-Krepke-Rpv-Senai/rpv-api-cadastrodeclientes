@@ -72,7 +72,6 @@ export default function CadastrarClientes() {
 
     async function buscaCep(){
         const cep = watch('cep')
-        console.log('cep', cep.length)
         if(cep.length !== 9) {
             setError('cep', { message: 'Cep inválido.'})
             return 
@@ -101,11 +100,12 @@ export default function CadastrarClientes() {
                     <InputMask 
                         errors={errors}
                         label='CPF/CNPJ'
-                        masks={['###.###.###-##', '##.###.###/####-##']}
+                        masks='cpfcnpj'
                         name='cpfcnpj'
                         register={register}
                         required
                         size={3}
+                        placeholder='Digite o seu CPF ou CNPJ'
                     />
                     <Input 
                         errors={errors}
@@ -138,8 +138,9 @@ export default function CadastrarClientes() {
                         register={register}
                         required
                         size={3}
-                        masks={['#####-###']}
+                        masks='cep'
                         funcaoParaSerMostrada={buscaCep}
+                        placeholder='Digite o CEP'
                     />
                     <Input 
                         errors={errors}
