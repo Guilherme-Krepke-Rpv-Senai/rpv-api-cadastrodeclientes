@@ -1,9 +1,6 @@
 import { FormType } from "@/pages/clientes/criar"
-<<<<<<< HEAD
-=======
 import { masksDefault, TMasksDefault } from "@/utils"
 import { ChangeEvent } from "react"
->>>>>>> e9946beea5de4fa897311ee6f4bc3b1ba38a3602
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
 
 const sizeClassMap = {
@@ -21,25 +18,13 @@ const sizeClassMap = {
     12: 'md:col-span-12'
 } as const
 
-<<<<<<< HEAD
-type TInput<T extends FieldValues> = {
-=======
 type TInputMask<T extends FieldValues> = {
->>>>>>> e9946beea5de4fa897311ee6f4bc3b1ba38a3602
     required: boolean
     label: string
     name: keyof T
     register: UseFormRegister<T>
     errors: FieldErrors<T>
     size: keyof typeof sizeClassMap
-<<<<<<< HEAD
-    placeholder?: string
-}
-
-export function Input({
-    errors,
-    label,
-=======
     masks: string | string[] | TMasksDefault
     placeholder?: string
 }
@@ -81,19 +66,10 @@ export function InputMask({
     errors,
     label,
     masks,
->>>>>>> e9946beea5de4fa897311ee6f4bc3b1ba38a3602
     name,
     register,
     required,
     size,
-<<<<<<< HEAD
-    placeholder
-}: TInput<FormType>) {
-    return(
-        <div className={`col-span-12 sm:col-span-6 ${sizeClassMap[size]} relative flex flex-col`}>
-            <label>{label}{required && (<span className='text-red-500'>*</span>)}: </label>
-            <input {...register(name)} className='border rounded-md px-2 py-1 text-zinc-100'/>
-=======
     placeholder = 'Digite'
 }: TInputMask<FormType>) {
     const registration = register(name)
@@ -116,7 +92,6 @@ export function InputMask({
         <div className={`col-span-12 sm:col-span-6 ${sizeClassMap[size]} relative flex flex-col`}>
             <label>{label}{required && (<span className='text-red-500'>*</span>)}: </label>
             <input {...registration} className='border rounded-md px-2 py-1 text-zinc-100' placeholder={placeholder} maxLength={maxLength} onChange={handleChange} />
->>>>>>> e9946beea5de4fa897311ee6f4bc3b1ba38a3602
             <span className='absolute top-16 text-xs text-red-500'>{errors[name]?.message}</span>
         </div>
     )
