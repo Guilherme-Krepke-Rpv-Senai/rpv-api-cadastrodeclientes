@@ -32,19 +32,19 @@ export default function CadastrarClientes() {
         setValue
     } = useForm<FormType>({
         resolver: zodResolver(regras),
-        defaultValues: {
-            nome: "Daniel Ventura",
-            email: "danielvalmeida91@gmail.com",
-            cpfcnpj: "12345678900",
-            sexo: "M",
-            cep: "36770066",
-            rua: "Rua Joaquim Peixoto Ramos",
-            bairro: "Centro",
-            cidade: "Cataguases",
-            estado: "MG",
-            numero: "12",
-            complemento: "201"
-        }
+        // defaultValues: {
+        //     nome: "Daniel Ventura",
+        //     email: "danielvalmeida91@gmail.com",
+        //     cpfcnpj: "12345678900",
+        //     sexo: "M",
+        //     cep: "36770066",
+        //     rua: "Rua Joaquim Peixoto Ramos",
+        //     bairro: "Centro",
+        //     cidade: "Cataguases",
+        //     estado: "MG",
+        //     numero: "12",
+        //     complemento: "201"
+        // }
     })
 
     async function onSubmit(data: FormType){
