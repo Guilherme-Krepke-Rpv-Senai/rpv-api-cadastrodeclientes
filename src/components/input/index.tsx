@@ -23,7 +23,6 @@ type TInput<T extends FieldValues> = {
     register: UseFormRegister<T>
     errors: FieldErrors<T>
     size: keyof typeof sizeClassMap
-    placeholder?: string
 }
 
 export function Input({
@@ -32,8 +31,7 @@ export function Input({
     name,
     register,
     required,
-    size,
-    placeholder
+    size
 }: TInput<FormType>) {
     return(
         <div className={`col-span-12 sm:col-span-6 ${sizeClassMap[size]} relative flex flex-col`}>
